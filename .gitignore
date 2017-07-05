@@ -1,0 +1,7 @@
+.DS_Store
+.swp
+.swo
+config
+rc/vim/bundle
+rc/vim/.netrwhist
+!rc/vim/bundle/neobundle.vim

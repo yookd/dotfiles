@@ -1,0 +1,9 @@
+[submodule "rc/oh-my-zsh"]
+	path = rc/oh-my-zsh
+	url = https://github.com/robbyrussell/oh-my-zsh
+[submodule "rc/vim/bundle/neobundle.vim"]
+	path = rc/vim/bundle/neobundle.vim
+	url = https://github.com/Shougo/neobundle.vim
+[submodule "dracula-iterm"]
+	path = dracula-iterm
+	url = https://github.com/dracula/iterm

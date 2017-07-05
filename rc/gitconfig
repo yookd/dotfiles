@@ -1,0 +1,59 @@
+[user]
+  name = David Yoo
+	email = dyoo@uber.com
+[color]
+  ui = auto
+[alias]
+  s = status
+  st = status
+  c = commit
+  ci = commit
+  co = checkout
+  up = checkout
+  d = diff
+  dif = diff
+  dc = diff --cached
+  ca = commit --amend
+  a = add
+  A = add -A
+  head = log -1
+  pom = push origin master
+  phm = push heroku master
+  rao = remote add origin
+  pr = pull --rebase
+  pt = push --tags
+  sn = show --name-only
+  lg1 = log --graph --all --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %s - %an%C(bold yellow)%d%C(reset)' --abbrev-commit --date=relative
+  lg2 = log --graph --all --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --abbrev-commit
+  l = !"git lg1"
+  lg = !"git lg2"
+  git = "!git"
+
+[core]
+	excludesfile = /Users/davidyoo/.global_ignore
+	autocrlf = input
+	editor = /usr/bin/vim
+[push]
+	default = current
+[url "https://"]
+[difftool "Kaleidoscope"]
+	cmd = ksdiff --partial-changeset --relative-path \"$MERGED\" -- \"$LOCAL\" \"$REMOTE\"
+[mergetool "Kaleidoscope"]
+	cmd = ksdiff --merge --output \"$MERGED\" --base \"$BASE\" -- \"$LOCAL\" --snapshot \"$REMOTE\" --snapshot
+	trustExitCode = true
+[branch]
+	autosetuprebase = always
+[rerere]
+	enabled = true
+[url "ssh://gitolite@code.uber.internal/"]
+	insteadOf = git://code.uber.internal/
+[url "ssh://git@github.com/uber/"]
+	insteadOf = https://github.com/uber/
+[url "ssh://code.uber.internal/"]
+	insteadOf = https://code.uber.internal/
+[url "ssh://config.uber.internal/"]
+	insteadOf = https://config.uber.internal/
+[http "https://gopkg.uberinternal.com"]
+	followRedirects = true
+[http "https://gopkg.in"]
+	followRedirects = true

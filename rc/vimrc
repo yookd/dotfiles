@@ -1,0 +1,271 @@
+" Note: Skip initialization for vim-tiny or vim-small.
+if !1 | finish | endif
+
+if has('vim_starting')
+  if &compatible
+    set nocompatible               " Be iMproved
+  endif
+
+  " Required:
+  set runtimepath+=~/.vim/bundle/neobundle.vim/
+endif
+
+" Required:
+call neobundle#begin(expand('~/.vim/bundle/'))
+
+" Let NeoBundle manage NeoBundle
+" Required:
+NeoBundleFetch 'Shougo/neobundle.vim'
+
+NeoBundle 'scrooloose/nerdcommenter'
+NeoBundle 'scrooloose/nerdtree'
+NeoBundle 'terryma/vim-multiple-cursors'
+
+NeoBundleLazy 'pangloss/vim-javascript', {'autoload':{'filetypes':['javascript']}}
+NeoBundleLazy 'tadeuzagallo/vim-jsx', {'autoload':{'filetypes':['javascript']}}
+NeoBundleLazy '1995eaton/vim-better-javascript-completion', {'autoload':{'filetypes':['javascript']}}
+NeoBundleLazy 'moll/vim-node', {'autoload':{'filetypes':['javascript']}}
+NeoBundleLazy 'octol/vim-cpp-enhanced-highlight', {'autoload':{'filetypes':['cpp']}}
+
+NeoBundle 'tpope/vim-fugitive'
+NeoBundle 'scrooloose/syntastic'
+NeoBundle 'SirVer/ultisnips'
+NeoBundle 'honza/vim-snippets'
+NeoBundle 'Valloric/YouCompleteMe'
+NeoBundle 'rdnetto/YCM-Generator'
+NeoBundle 'bling/vim-airline'
+NeoBundle 'Townk/vim-autoclose'
+NeoBundle 'tpope/vim-markdown'
+NeoBundle 'tpope/vim-surround'
+NeoBundle 'godlygeek/tabular'
+NeoBundle 'gilligan/vim-lldb'
+NeoBundle 'rizzatti/dash.vim'
+NeoBundle 'dracula/vim'
+NeoBundle 'jvoorhis/coq.vim'
+NeoBundle 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+
+NeoBundleLazy 'b4winckler/vim-objc', {'autoload':{'filetypes':['objc']}}
+NeoBundleLazy 'eraserhd/vim-ios.git', {'autoload':{'filetypes':['objc']}}
+
+NeoBundle 'neovimhaskell/haskell-vim'
+
+" OCaml
+NeoBundle 'the-lambda-church/merlin', { 'do': './configure && make && make install', 'rtp': '/usr/local/share/ocamlmerlin/vim' }
+NeoBundle 'jpalardy/vim-slime'
+NeoBundle 'OCamlPro/ocp-indent'
+
+call neobundle#end()
+
+" Required:
+
+" If there are uninstalled bundles found on startup,
+" this will conveniently prompt you to install them.
+NeoBundleCheck
+
+let mapleader=","
+let g:airline_powerline_fonts = 1
+let g:jsx_ext_required = 0
+
+filetype plugin indent on
+
+syntax enable
+color dracula
+
+set mouse=a
+set clipboard=unnamed
+set noshowmode
+set backspace=indent,eol,start
+set timeoutlen=1000 ttimeoutlen=0
+set backupdir=/tmp
+set directory=/tmp
+set ignorecase
+set expandtab
+set smarttab
+set smartindent
+set autoindent
+set tabstop=2
+set softtabstop=2
+set shiftwidth=2
+set number
+set cursorline
+set linespace=4
+set laststatus=2
+set colorcolumn=80
+set splitright
+set splitbelow
+set incsearch
+set foldmethod=marker
+set pastetoggle=<f2>
+set wildignore+=*.o,*.hi,*.a,*.obj,*/.git/*,**/node_modules/*,*.class,*.zip,*.aux,*/_build/*
+set encoding=utf-8
+
+" spell check
+set spell spelllang=en_us
+hi clear SpellBad
+hi clear SpellCap
+hi clear SpellLocal
+hi clear SpellRare
+hi SpellBad cterm=underline
+function! Trim()
+  let lnum = line('.')
+  let cnum = col('.')
+  exe ':%s/\s\+$//e'
+  exe 'normal ' . lnum . 'G'
+  exe 'normal ' . cnum . '|'
+endfunction
+
+nnoremap <silent><leader><leader>t :call Trim()<CR>
+
+inoremap jk <Esc>
+
+nnoremap <silent><leader>b :buffers<CR>:buffer<Space>
+nnoremap <silent> <F8> mmgg=G'm^
+
+" pane splitting shortcuts
+nnoremap <silent><leader>v :vs<cr>
+nnoremap <silent><leader>s :sp<cr>
+nnoremap <silent><leader>q :q<cr>
+nnoremap <silent><leader>w :w<cr>
+nnoremap <silent><leader>r :redraw!<CR>
+
+" tabs shortcuts
+nnoremap <silent><leader>t :tabnew<cr>
+nmap <silent><C-}> :tabnext<cr>
+nmap <silent><C-{> :tabprev<cr>
+nnoremap <silent><leader><leader>c :tabclose<cr>
+nnoremap <silent><leader>1 :tabnext 1<cr>
+nnoremap <silent><leader>2 :tabnext 2<cr>
+nnoremap <silent><leader>3 :tabnext 3<cr>
+nnoremap <silent><leader>4 :tabnext 4<cr>
+nnoremap <silent><leader>5 :tabnext 5<cr>
+nnoremap <silent><leader>6 :tabnext 6<cr>
+nnoremap <silent><leader>7 :tabnext 7<cr>
+nnoremap <silent><leader>8 :tabnext 8<cr>
+nnoremap <silent><leader>9 :tablast <cr>
+
+" pane navigation
+
+function! Navigate(direction)
+  let nr = winnr()
+  exec 'wincmd ' . a:direction
+
+  if nr == winnr()
+    let nr = tabpagenr()
+
+    if a:direction == 'h' && nr > 1
+      exec 'tabprevious'
+    elseif a:direction == 'l' && tabpagewinnr(nr + 1) > 0
+      exec 'tabnext'
+    endif
+
+    if nr == tabpagenr()
+      let cmd = 'tmux select-pane -' . tr(a:direction, 'phjkl', 'lLDUR')
+      call system(cmd)
+    endif
+  endif
+endfunction
+
+nnoremap <silent><C-h> :call Navigate('h')<CR>
+nnoremap <silent><C-l> :call Navigate('l')<CR>
+nnoremap <silent><C-k> :call Navigate('k')<CR>
+nnoremap <silent><C-j> :call Navigate('j')<CR>
+
+"syntastic
+
+let g:syntastic_enable_signs=1
+"let g:syntastic_objc_config_file = ".clang_complete"
+let g:syntastic_javascript_checkers = ['eslint']
+let g:syntastic_cpp_compiler = 'clang++'
+let g:syntastic_cpp_compiler_options = ' -std=c++11 -stdlib=libc++'
+
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+nnoremap <silent>` :Errors<CR>
+nnoremap <silent><leader>` :lclose<CR>
+
+" filetype format
+
+autocmd BufRead,BufNewFile BUCK set filetype=python
+" YouCompleteMe
+
+let g:ycm_key_list_select_completion=['<C-n>']
+let g:ycm_key_list_previous_completion=['<C-p>']
+
+" Tabular
+if exists(":Tabularize")
+  nmap <Leader>= :Tabularize /=<CR>
+  vmap <Leader>= :Tabularize /=<CR>
+  nmap <Leader>; :Tabularize /:\zs<CR>
+  vmap <Leader>; :Tabularize /:\zs<CR>
+endif
+
+" switch between source and header
+
+function! Switch()
+  let file = expand('%')
+  let header_pattern = '\.h\(pp\)\{0,1}'
+  let source_pattern = '\(\.c\(c\|pp\)\{0,1}\|\.m\{1,2}\)$'
+  if match(file, source_pattern) > 0
+    let header = substitute(file, source_pattern, '.h', '')
+    execute ":find " header
+  elseif match(file, header_pattern) > 0
+    let source = substitute(file, header_pattern, '.c', '')
+    if findfile(source) == ""
+      let source = substitute(file, header_pattern, '.cpp', '')
+    endif
+    if findfile(source) == ""
+      let source = substitute(file, header_pattern, '.cc', '')
+    endif
+    if findfile(source) == ""
+      let source = substitute(file, header_pattern, '.m', '')
+    endif
+    if findfile(source) == ""
+      let source = substitute(file, header_pattern, '.mm', '')
+    endif
+    execute ":edit " findfile(source)
+  endif
+endfunction
+
+nnoremap <silent><leader><leader><tab> :call Switch()<CR>
+
+" dash.vim
+
+:nmap <silent> <leader>d <Plug>DashSearch
+
+" flow-vim
+
+let g:flow#autoclose = 1
+
+" nerdtree
+"
+map <silent> <leader><tab> :NERDTreeToggle<CR>
+"autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+
+" FZF
+nnoremap <silent><C-p> :FZF<CR>
+
+" Zoom / Restore window.
+function! s:ZoomToggle() abort
+    if exists('t:zoomed') && t:zoomed
+        execute t:zoom_winrestcmd
+        let t:zoomed = 0
+    else
+        let t:zoom_winrestcmd = winrestcmd()
+        resize
+        vertical resize
+        let t:zoomed = 1
+    endif
+endfunction
+command! ZoomToggle call s:ZoomToggle()
+nnoremap <silent> <leader>z :ZoomToggle<CR>
+
+" slime
+let g:slime_target = "tmux"
+let g:slime_paste_file = "/tmp/.slime_paste"
+let g:slime_default_config = {"socket_name": "default", "target_pane": "1"}
+let g:slime_dont_ask_default = 1
+
+" merlin
+nnoremap <C-t> :MerlinTypeOf<CR>
