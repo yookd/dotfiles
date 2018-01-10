@@ -76,7 +76,7 @@ brew cask install \
   quicklook-json \
   qlprettypatch \
   quicklook-csv \
-  betterzipql \
+  betterzip \
   qlimagesize \
   webpquicklook \
   suspicious-package \
