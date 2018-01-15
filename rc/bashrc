@@ -36,6 +36,8 @@ export VISUAL=/usr/local/bin/vim
 
 # aliases
 
+alias vi=/usr/local/bin/vim
+alias vim=/usr/local/bin/vim
 alias sb='source ~/.bashrc'
 alias eb='vim ~/.bashrc'
 alias ev='vim ~/.vimrc'
