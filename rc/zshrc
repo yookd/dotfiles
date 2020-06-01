@@ -5,7 +5,17 @@ if [[ "$PROFILE" == "1" ]]; then
   t0=$EPOCHREALTIME
 fi
 
+# PATH
+
 export PATH=$HOME/.rvm/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:./node_modules/.bin:$GOPATH/bin:$PATH
+
+# nvm
+
+export NVM_DIR="$HOME/.nvm"
+# This loads nvm
+[ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"
+# This loads nvm bash_completion
+[ -s "/usr/local/opt/nvm/etc/bash_completion.d/nvm" ] && . "/usr/local/opt/nvm/etc/bash_completion.d/nvm" 
 
 export KEYTIMEOUT=1
 export DYLD_FORCE_FLAT_NAMESPACE=1
@@ -25,25 +35,27 @@ ZSH=~/.oh-my-zsh
 # !! slow 450ms :(
 source $ZSH/oh-my-zsh.sh
 
+# colors
+
+export CLICOLOR=1
 source ~/.my_zsh_theme.sh
 
-# Customize to your needs...
+# Aliases
 
 alias sz='source ~/.zshrc'
-alias ez='vim ~/.zshrc'
-alias ev='vim ~/.vimrc'
-alias et='vim ~/.tmux.conf'
-alias rn=react-native
-
-alias :e=cd
+alias vz='vim ~/.zshrc'
+alias vv='vim ~/.vimrc'
+alias vt='vim ~/.tmux.conf'
 alias g='git'
 alias v='vim'
 alias vi='vim'
 alias c='clear'
 alias e='exit'
-alias l='ls -la'
-alias f='ls'
-alias jsc='/System/Library/Frameworks/JavaScriptCore.framework/Versions/Current/Resources/jsc'
+alias l='ls -ltr'
+alias ip="ipconfig getifaddr en0 || ipconfig getifaddr en1"
+alias weather='curl http://wttr.in/london?m'
+
+# editor
 
 export EDITOR='DYLD_FORCE_FLAT_NAMESPACE=1 /usr/local/bin/vim'
 export VISUAL=/usr/local/bin/vim
@@ -74,16 +86,6 @@ bindkey '^N' history-substring-search-down
 
 bindkey -M vicmd '^P' history-substring-search-up
 bindkey -M vicmd '^N' history-substring-search-down
-
-alias ip="ipconfig getifaddr en0 || ipconfig getifaddr en1"
-alias weather='curl http://wttr.in/london?m'
-
-# !! brew --prefix is slow... 600ms for both calls :(
-#
-# export ANDROID_SDK=$(brew --prefix android-sdk)
-# export ANDROID_NDK=$(brew --prefix android-ndk)
-# export ANDROID_HOME=${ANDROID_SDK}
-# export PATH=${PATH}:${ANDROID_SDK}/tools:${ANDROID_SDK}/platform-tools
 
 # FZF
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

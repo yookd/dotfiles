@@ -22,7 +22,6 @@ NeoBundle 'scrooloose/nerdtree'
 NeoBundle 'terryma/vim-multiple-cursors'
 
 NeoBundleLazy 'pangloss/vim-javascript', {'autoload':{'filetypes':['javascript']}}
-NeoBundleLazy 'tadeuzagallo/vim-jsx', {'autoload':{'filetypes':['javascript']}}
 NeoBundleLazy '1995eaton/vim-better-javascript-completion', {'autoload':{'filetypes':['javascript']}}
 NeoBundleLazy 'moll/vim-node', {'autoload':{'filetypes':['javascript']}}
 NeoBundleLazy 'octol/vim-cpp-enhanced-highlight', {'autoload':{'filetypes':['cpp']}}

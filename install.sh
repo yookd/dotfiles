@@ -38,15 +38,6 @@ do
   fi
 done
 
-# link fonts
-cp ./fonts/SourceCode-Powerline-Regular.otf ~/Library/Fonts
-
-pushd ~/Library/Fonts > /dev/null
-curl -L https://github.com/i-tu/Hasklig/releases/download/v1.0-beta/Hasklig-1.0-Beta.zip > Hasklig.zip
-unzip Hasklig.zip
-rm Hasklig.zip
-popd > /dev/null
-
 # install submodules
 git submodule init
 git submodule update
