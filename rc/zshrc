@@ -56,6 +56,10 @@ TIMEFMT=$'\nreal\t%E\nuser\t%U\nsys\t%S'
 unsetopt nomatch
 unsetopt correct_all
 
+# nvm
+
+export NVM_DIR=~/.nvm
+source $(brew --prefix nvm)/nvm.sh # This loads nvm
 
 export NODE_PATH=/usr/local/share/npm/lib/node_modules
 export NODE_ENV=development
